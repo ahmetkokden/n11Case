@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_user_item"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_150dp"
+    android:background="@drawable/layout_border"
+    android:elevation="@dimen/dimen_6dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginStart="@dimen/dimen_75dp"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ts_16sp"
+            android:text="ahmet Kökden"/>
+        <TextView
+            android:id="@+id/tv_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ts_16sp"
+            android:text="ahmet Kökden"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_user_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginStart="@dimen/dimen_15dp"
+        android:background="@drawable/layout_border"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|end"
+        android:gravity="center"
+        android:layout_marginEnd="@dimen/dimen_15dp"
+        android:layout_marginBottom="@dimen/dimen_15dp">
+        <TextView
+            android:id="@+id/tv_user_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="1.0"/>
+        <ImageView
+            android:id="@+id/iv_favorite_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_5dp"
+            android:src="@drawable/ic_favourite"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
+
+
+</FrameLayout>

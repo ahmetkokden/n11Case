@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_user_list_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/ts_30sp"
+        android:text="User Listesi Boş"
+        android:gravity="center"
+        android:visibility="gone"
+        />
+
+    <FrameLayout
+        android:id="@+id/fl_user_list_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_18dp"
+        android:layout_marginTop="@dimen/dimen_22dp"
+        android:layout_marginEnd="@dimen/dimen_18dp"
+        android:layout_marginBottom="@dimen/dimen_22dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:id="@+id/til_shipment_list_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dimen_50dp"
+                android:background="@drawable/layout_border">
+
+
+                <EditText
+                    android:id="@+id/et_user_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="@dimen/dimen_10dp"
+                    android:alpha="0.5"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:hint="Arayacağınız kişinin nickname'ini giriniz"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="@dimen/dimen_5dp"
+                    android:textSize="@dimen/ts_12sp"
+                    android:textStyle="normal"
+                    tools:ignore="Autofill,TextFields" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/iv_user_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_15dp"
+                android:layout_gravity="end|center_vertical"
+                android:src="@drawable/ic_search" />
+
+
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_user_list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_100dp"
+        android:layout_marginBottom="@dimen/dimen_0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_user_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
