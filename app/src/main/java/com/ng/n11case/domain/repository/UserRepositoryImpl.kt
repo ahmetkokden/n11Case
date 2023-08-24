@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
 import retrofit2.HttpException
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class UserRepositoryImpl @Inject constructor(
     private val githubService: GithubService

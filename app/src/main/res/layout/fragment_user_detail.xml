@@ -8,7 +8,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_5dp"
-        android:text="Score"
         android:textSize="@dimen/ts_20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +39,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_5dp"
-        android:text="Score"
         android:textSize="@dimen/ts_20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +61,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Takipçi Sayısı"
+                android:text="@string/followers"
                 android:textSize="@dimen/ts_16sp" />
 
             <View
@@ -75,7 +73,6 @@
                 android:id="@+id/tv_user_public_repo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Takipçi Sayısı"
                 android:textSize="@dimen/ts_16sp" />
         </LinearLayout>
 
@@ -87,7 +84,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Takipçi Sayısı"
+                android:text="@string/following"
                 android:textSize="@dimen/ts_16sp"/>
 
             <View
@@ -99,7 +96,6 @@
                 android:id="@+id/tv_following"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Takipçi Sayısı"
                 android:textSize="@dimen/ts_16sp"/>
         </LinearLayout>
 
@@ -111,7 +107,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Takipçi Sayısı"
+                android:text="@string/public_repo_count"
                 android:textSize="@dimen/ts_16sp"/>
 
             <View
@@ -123,7 +119,6 @@
                 android:id="@+id/tv_user_followers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Takip Edilen"
                 android:textSize="@dimen/ts_16sp"/>
         </LinearLayout>
 

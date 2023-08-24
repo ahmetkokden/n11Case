@@ -5,7 +5,6 @@ import com.ng.n11case.data.model.base.NetworkResult
 import com.ng.n11case.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class UserSearchUseCaseImpl @Inject constructor(
     private val userRepository: UserRepository

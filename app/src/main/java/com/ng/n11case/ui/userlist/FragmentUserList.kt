@@ -1,7 +1,6 @@
 package com.ng.n11case.ui.userlist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">n11Case</string>
+    <string name="followers">Takipçi Sayısı</string>
+    <string name="following">Takip Edilen</string>
+    <string name="empty_user_list">User Listesi Boş</string>
+    <string name="public_repo_count">Public Repo Sayısı</string>
+    <string name="search_hint">Arayacağınız kişinin username giriniz</string>
 </resources>

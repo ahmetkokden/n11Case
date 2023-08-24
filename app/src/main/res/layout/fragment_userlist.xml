@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="@dimen/ts_30sp"
-        android:text="User Listesi Boş"
+        android:text="@string/empty_user_list"
         android:gravity="center"
         android:visibility="gone"
         />
@@ -32,7 +32,7 @@
                 android:id="@+id/til_shipment_list_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dimen_50dp"
+                android:layout_marginEnd="@dimen/dimen_50dp"
                 android:background="@drawable/layout_border">
 
 
@@ -45,7 +45,7 @@
                     android:alpha="0.5"
                     android:background="@android:color/transparent"
                     android:ellipsize="end"
-                    android:hint="Arayacağınız kişinin nickname'ini giriniz"
+                    android:hint="@string/search_hint"
                     android:inputType="text"
                     android:maxLines="1"
                     android:padding="@dimen/dimen_5dp"
