@@ -7,11 +7,13 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ng.n11case.R
 import com.ng.n11case.base.BaseFragment
 import com.ng.n11case.base.viewBinding
 import com.ng.n11case.data.model.UserItem
 import com.ng.n11case.databinding.FragmentUserlistBinding
+import com.ng.n11case.utilities.listener.PaginationScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,6 +47,7 @@ class FragmentUserList : BaseFragment(R.layout.fragment_userlist) {
         }
 
         setUpListeners()
+        addScrollListener()
         setUpAdapter(emptyList())
     }
 
@@ -71,6 +74,21 @@ class FragmentUserList : BaseFragment(R.layout.fragment_userlist) {
         )
         adapter.updateItems(userList)
         binding.rvUserList.adapter = adapter
+    }
+
+    private fun addScrollListener() {
+        binding.apply {
+            rvUserList.addOnScrollListener(object :
+                PaginationScrollListener(rvUserList.layoutManager as LinearLayoutManager) {
+                override fun loadMoreItems(currentTotalCount:Int) {
+                    if(currentTotalCount >= userListViewModel.pagePerSize) {
+                        userListViewModel.loadMoreItems(currentTotalCount)
+                    }
+                }
+
+                override fun isLastPage() = userListViewModel.isAllUserLoaded
+            })
+        }
     }
 
     private fun userCardClicked(userName: String) {

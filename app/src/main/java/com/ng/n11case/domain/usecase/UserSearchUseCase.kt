@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 interface UserSearchUseCase {
     suspend fun searchUsers(
         searchKeyword: String,
-        page: Int,
-        per_page: Int = 10
+        page: Int = 1,
+        per_page: Int
     ): Flow<NetworkResult<UserList>>
 
 

@@ -21,12 +21,15 @@ class GithubDatabaseRepository @Inject internal constructor(
 
     fun getTotalCount(): Double = totalCountDao.getTotalCount().totalCount
 
+    fun getSearchText(): String = totalCountDao.getTotalCount().searchText
+
     fun deleteTotalCount() = totalCountDao.deleteTotalCount()
 
-    fun setTotalCount(totalCount: Double) = totalCountDao.setTotalCountEntity(
+    fun setUserListParameter(totalCount: Double,searchText:String) = totalCountDao.setTotalCountEntity(
         TotalCountEntity(
             id = UUID.randomUUID().mostSignificantBits and Long.MAX_VALUE,
-            totalCount = totalCount
+            totalCount = totalCount,
+            searchText = searchText
         )
     )
 

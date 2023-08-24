@@ -1,9 +1,7 @@
 package com.ng.n11case.ui.userlist
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ng.n11case.data.model.UserDetailItem
 import com.ng.n11case.data.model.UserItem
 import com.ng.n11case.data.model.base.NetworkResult
 import com.ng.n11case.domain.repository.GithubDatabaseRepository
@@ -25,12 +23,15 @@ class UserListViewModel @Inject constructor(
     private val _userList = MutableStateFlow<List<UserItem>>(emptyList())
     val userList = _userList.asStateFlow()
 
-    var pageNumber: Int = 1
+    var pagePerSize: Int = 10
     var totalCount: Double = 0.0
+    var isAllUserLoaded = false
+    var searchText = " "
 
     fun searchUser(searchText: String) {
+        this.searchText = searchText
         viewModelScope.launch {
-            userSearchUseCase.searchUsers(searchText, pageNumber).collect { response ->
+            userSearchUseCase.searchUsers(searchText, per_page = pagePerSize).collect { response ->
                 when (response.status) {
                     NetworkResult.Status.SUCCESS -> {
                         _userList.emit(response.data?.users ?: emptyList())
@@ -38,10 +39,11 @@ class UserListViewModel @Inject constructor(
                             withContext(Dispatchers.IO) {
                                 githubDatabaseRepository.deleteUserList()
                                 githubDatabaseRepository.addUserList(it.users)
-                                githubDatabaseRepository.setTotalCount(response.data.totalCount.toDouble())
+                                githubDatabaseRepository.setUserListParameter(response.data.totalCount.toDouble(),searchText)
                             }
                         }
                         totalCount = response.data?.totalCount?.toDouble() ?: 0.0
+                        isAllUserLoaded = userList.value.count() >= totalCount
                     }
                     NetworkResult.Status.LOADING -> {
 
@@ -69,9 +71,38 @@ class UserListViewModel @Inject constructor(
         if (userList.isNotEmpty()) {
             _userList.emit(userList)
             totalCount = githubDatabaseRepository.getTotalCount()
+            searchText = githubDatabaseRepository.getSearchText()
         } else {
-            searchUser("")
+            searchUser("a")
         }
 
+    }
+
+    fun loadMoreItems(currentTotalCount:Int) {
+        pagePerSize += currentTotalCount
+        viewModelScope.launch {
+            userSearchUseCase.searchUsers(searchText, per_page = pagePerSize).collect { response ->
+                when (response.status) {
+                    NetworkResult.Status.SUCCESS -> {
+                        _userList.emit(response.data?.users ?: emptyList())
+                        response.data?.let {
+                            withContext(Dispatchers.IO) {
+                                githubDatabaseRepository.deleteUserList()
+                                githubDatabaseRepository.addUserList(it.users)
+                                githubDatabaseRepository.setUserListParameter(response.data.totalCount.toDouble(),searchText)
+                            }
+                        }
+                        totalCount = response.data?.totalCount?.toDouble() ?: 0.0
+                        isAllUserLoaded = userList.value.count() >= totalCount
+                    }
+                    NetworkResult.Status.LOADING -> {
+
+                    }
+                    NetworkResult.Status.ERROR -> {
+
+                    }
+                }
+            }
+        }
     }
 }
