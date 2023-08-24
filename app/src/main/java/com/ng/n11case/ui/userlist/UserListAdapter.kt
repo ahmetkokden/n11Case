@@ -1,6 +1,5 @@
 package com.ng.n11case.ui.userlist
 
-import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ng.n11case.data.model.UserItem
@@ -10,7 +9,8 @@ class UserListAdapter(
     private val clickListener: (String) -> Unit,
     private val favouriteUser: (Boolean,String) -> Unit
 ) : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>() {
-    private var items: List<UserItem> = emptyList()
+
+    var items: MutableList<UserItem> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
         val binding = UserCardView(context = parent.context)
         return UserListViewHolder(binding)
@@ -21,10 +21,9 @@ class UserListAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(itemList: List<UserItem>?) {
-        items = itemList ?: emptyList()
-        notifyDataSetChanged()
+        items = itemList?.toMutableList() ?: mutableListOf()
+        this.notifyDataSetChanged()
     }
 
     inner class UserListViewHolder(private val view: UserCardView) :

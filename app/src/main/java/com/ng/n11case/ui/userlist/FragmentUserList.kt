@@ -29,7 +29,7 @@ class FragmentUserList : BaseFragment(R.layout.fragment_userlist) {
             userListViewModel.userList.collect {
                 binding.tvUserListInfo.visibility =
                     if (userListViewModel.userList.value.isEmpty()) View.VISIBLE else View.GONE
-                setUpAdapter(it)
+                adapter.updateItems(it)
             }
         }
     }
@@ -71,7 +71,6 @@ class FragmentUserList : BaseFragment(R.layout.fragment_userlist) {
                 )
             }
         )
-        adapter.updateItems(userList)
         binding.rvUserList.adapter = adapter
     }
 
