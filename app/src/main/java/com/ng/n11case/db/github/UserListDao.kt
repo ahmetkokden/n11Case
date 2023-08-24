@@ -13,6 +13,9 @@ interface UserListDao {
     @Query("SELECT * FROM user_list_table where user_name LIKE  :userName LIMIT 1")
     fun findByName(userName: String?): UserListEntity?
 
+    @Query("UPDATE user_list_table SET is_favourited=:isFavourite WHERE user_name = :userName")
+    fun update(isFavourite: Boolean, userName: String)
+
     @Query("DELETE FROM user_list_table")
     fun purgeAllUsers()
 

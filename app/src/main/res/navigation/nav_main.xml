@@ -8,5 +8,20 @@
         android:id="@+id/userListFragment"
         android:name="com.ng.n11case.ui.userlist.FragmentUserList"
         tools:layout="@layout/fragment_userlist">
+        <action
+            android:id="@+id/action_userListFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment">
+            <argument
+                android:name="userName"
+                app:argType="string"/>
+        </action>
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.ng.n11case.ui.userdetail.FragmentUserDetail"
+        tools:layout="@layout/fragment_user_detail">
+
     </fragment>
 </navigation>

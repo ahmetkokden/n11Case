@@ -9,5 +9,6 @@ data class UserDetailItem(
     val userUrl: String,
     val followers: Double,
     val following: Double,
-    val publicRepoCount: Int
+    val publicRepoCount: Int,
+    var isFavourited: Boolean = false
 )

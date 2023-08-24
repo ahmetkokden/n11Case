@@ -8,7 +8,7 @@ import com.ng.n11case.utilities.customviews.UserCardView
 
 class UserListAdapter(
     private val clickListener: (String) -> Unit,
-    private val favouriteUser: (String) -> Unit
+    private val favouriteUser: (Boolean,String) -> Unit
 ) : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>() {
     private var items: List<UserItem> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
@@ -32,11 +32,11 @@ class UserListAdapter(
         fun bind(
             listItem: UserItem,
             clickListener: (String) -> Unit,
-            favouriteUser: (String) -> Unit
+            favouriteUser: (Boolean,String) -> Unit
         ) {
             view.setFieldsWithModel(listItem)
-            view.setOnClickFavouriteIconListener { userName ->
-                favouriteUser(userName)
+            view.setOnClickFavouriteIconListener { isFavourited,userName ->
+                favouriteUser(isFavourited,userName)
             }
             view.setOnClickUserCardListener { userName ->
                 clickListener(userName)

@@ -3,8 +3,10 @@ package com.ng.n11case.ui.userlist
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.ng.n11case.R
 import com.ng.n11case.base.BaseFragment
 import com.ng.n11case.base.viewBinding
@@ -22,13 +24,11 @@ class FragmentUserList : BaseFragment(R.layout.fragment_userlist) {
     private lateinit var adapter: UserListAdapter
 
     override fun observeVariables() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                userListViewModel.userList.collect {
-                    binding.tvUserListInfo.visibility =
-                        if (userListViewModel.userList.value.isEmpty()) View.VISIBLE else View.GONE
-                    adapter.updateItems(it)
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            userListViewModel.userList.collect {
+                binding.tvUserListInfo.visibility =
+                    if (userListViewModel.userList.value.isEmpty()) View.VISIBLE else View.GONE
+                setUpAdapter(it)
             }
         }
     }
@@ -38,11 +38,9 @@ class FragmentUserList : BaseFragment(R.layout.fragment_userlist) {
             withContext(Dispatchers.IO) {
                 userListViewModel.checkCacheData()
             }
-
         }
 
         binding.apply {
-
             rvUserList.addItemDecoration(UserListRecyclerViewDecoration())
         }
 
@@ -65,9 +63,9 @@ class FragmentUserList : BaseFragment(R.layout.fragment_userlist) {
                     userName
                 )
             },
-            favouriteUser = { userName ->
+            favouriteUser = { isFavourited, userName ->
                 favouriteUser(
-                    userName
+                    isFavourited, userName
                 )
             }
         )
@@ -76,10 +74,20 @@ class FragmentUserList : BaseFragment(R.layout.fragment_userlist) {
     }
 
     private fun userCardClicked(userName: String) {
-        Log.d("CLİCK", "Clicked -> $userName")
+        binding.apply {
+            val bundle =
+                bundleOf(USERNAME to userName)
+            findNavController().navigate(
+                R.id.action_userListFragment_to_userDetailFragment, bundle
+            )
+        }
     }
 
-    private fun favouriteUser(userName: String) {
-        Log.d("CLİCK", "Clicked -> $userName")
+    private fun favouriteUser(isFavourited: Boolean, userName: String) {
+        userListViewModel.favouriteUser(isFavourited, userName)
+    }
+
+    companion object {
+        const val USERNAME = "user_name"
     }
 }

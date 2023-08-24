@@ -20,7 +20,7 @@ class UserCardView @JvmOverloads constructor(
     val binding: UserCardViewBinding
         get() = _binding!!
 
-    private var clickedFavouriteIcon: (String) -> Unit = {}
+    private var clickedFavouriteIcon: (Boolean, String) -> Unit = { _, _ -> }
     private var clickedUserCard: (String) -> Unit = {}
 
     init {
@@ -29,9 +29,9 @@ class UserCardView @JvmOverloads constructor(
 
         binding.apply {
             ivFavoriteUser.setOnClickListener {
-                clickedFavouriteIcon(userItem.userName)
                 userItem.isFavourited =
                     !userItem.isFavourited
+                clickedFavouriteIcon(userItem.isFavourited, userItem.userName)
                 ivFavoriteUser.setImageResource(if (userItem.isFavourited) R.drawable.ic_favourited else R.drawable.ic_favourite)
 
             }
@@ -51,10 +51,12 @@ class UserCardView @JvmOverloads constructor(
             tvUserName.text = userItem.userName
             tvUserId.text = userItem.userId.toString()
             tvUserScore.text = userItem.score.toString()
+            ivFavoriteUser.setImageResource(if (userItem.isFavourited) R.drawable.ic_favourited else R.drawable.ic_favourite)
+
         }
     }
 
-    fun setOnClickFavouriteIconListener(callback: (String) -> Unit) {
+    fun setOnClickFavouriteIconListener(callback: (Boolean, String) -> Unit) {
         clickedFavouriteIcon = callback
     }
 

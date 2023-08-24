@@ -5,10 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ng.n11case.data.model.UserDetailItem
 import com.ng.n11case.data.model.UserItem
-import com.ng.n11case.data.model.UserList
 import com.ng.n11case.data.model.base.NetworkResult
 import com.ng.n11case.domain.repository.GithubDatabaseRepository
-import com.ng.n11case.domain.usecase.UserDetailUseCase
 import com.ng.n11case.domain.usecase.UserSearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,15 +19,11 @@ import javax.inject.Inject
 @HiltViewModel
 class UserListViewModel @Inject constructor(
     private val userSearchUseCase: UserSearchUseCase,
-    private val userDetailUseCase: UserDetailUseCase,
     private val githubDatabaseRepository: GithubDatabaseRepository
 ) : ViewModel() {
 
     private val _userList = MutableStateFlow<List<UserItem>>(emptyList())
     val userList = _userList.asStateFlow()
-
-    private val _userDetail = MutableStateFlow<UserDetailItem?>(null)
-    val userDetail = _userDetail.asStateFlow()
 
     var pageNumber: Int = 1
     var totalCount: Double = 0.0
@@ -42,6 +36,7 @@ class UserListViewModel @Inject constructor(
                         _userList.emit(response.data?.users ?: emptyList())
                         response.data?.let {
                             withContext(Dispatchers.IO) {
+                                githubDatabaseRepository.deleteUserList()
                                 githubDatabaseRepository.addUserList(it.users)
                                 githubDatabaseRepository.setTotalCount(response.data.totalCount.toDouble())
                             }
@@ -59,32 +54,23 @@ class UserListViewModel @Inject constructor(
         }
     }
 
-    fun getUserDetail() {
+    fun favouriteUser(isFavourited: Boolean, userName: String) {
         viewModelScope.launch {
-            userDetailUseCase.getUserDetail("ahmetkokden").collect { response ->
-                when (response.status) {
-                    NetworkResult.Status.SUCCESS -> {
-                        Log.d("Detail", response.data.toString())
-                    }
-                    NetworkResult.Status.LOADING -> {
-
-                    }
-                    NetworkResult.Status.ERROR -> {
-
-                    }
-                }
+            withContext(Dispatchers.IO) {
+                githubDatabaseRepository.update(isFavourited, userName)
             }
         }
+
     }
 
     suspend fun checkCacheData() {
-        if (userList.value.isEmpty()) {
-            val userList = githubDatabaseRepository.getUserList()
+        val userList = githubDatabaseRepository.getUserList()
 
-            if(userList.isNotEmpty()){
-                _userList.emit(userList)
-                totalCount = githubDatabaseRepository.getTotalCount()
-            }
+        if (userList.isNotEmpty()) {
+            _userList.emit(userList)
+            totalCount = githubDatabaseRepository.getTotalCount()
+        } else {
+            searchUser("")
         }
 
     }

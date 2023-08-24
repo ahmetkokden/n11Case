@@ -39,6 +39,8 @@ class GithubDatabaseRepository @Inject internal constructor(
     fun setUserDetailEntity(userDetailItem: UserDetailItem) =
         userDetailDao.setUserDetailEntity(userDetailItem.toUserDetailEntity())
 
+    fun getUserDetailByName(userName: String): UserDetailItem? = userDetailDao.findByName(userName)?.toUserDetailItem()
+
     private val userListDao = githubDatabase.userListDao()
 
     fun getUserList(): List<UserItem> = userListDao.flowUsers().map { entity ->
@@ -53,4 +55,6 @@ class GithubDatabaseRepository @Inject internal constructor(
 
     fun addUserList(userList: List<UserItem>) =
         userListDao.addUserList(userList.map { item -> item.toUserListEntity() })
+
+    fun update(isFavourite: Boolean, userName: String) = userListDao.update(isFavourite, userName)
 }
